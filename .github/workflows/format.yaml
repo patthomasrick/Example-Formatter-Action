@@ -39,7 +39,7 @@ jobs:
       - name: git add
         run: |
           git add --all
-          git reset -- *.lock
+          git reset -- "package-lock.json"
 
       - name: git diff
         id: git-diff
