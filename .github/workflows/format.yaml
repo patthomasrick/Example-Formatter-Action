@@ -40,6 +40,10 @@ jobs:
         run: |
           git add .
 
+      - name: git diff (echo)
+        run: |
+          echo "$(git diff --quiet && git diff --staged --quiet || git diff)"
+
       - name: git diff
         id: git-diff
         run: |
@@ -50,6 +54,6 @@ jobs:
         run: |
           git config --local user.email "patrick@patrickwthomas"
           git config --local user.name "Patrick Thomas"
-          git checkout -b format
+          git checkout -b format-${{ github.sha }}
           git commit -m "Format"
           git push --set-upstream origin format
