@@ -40,14 +40,11 @@ jobs:
         run: |
           git add --all
 
-      - name: git diff (echo)
-        run: |
-          echo "$(git diff --staged --name-only || git diff --name-only)"
-
       - name: git diff
         id: git-diff
         run: |
-          git diff --staged --name-only || git diff --name-only
+          DIFF="$(git diff --staged --name-only || git diff --name-only)"
+          echo "::set-output name=stdout::${DIFF}"
 
       - name: git branch, commit, push if changed
         if: steps.git-diff.outputs.stdout != ''
