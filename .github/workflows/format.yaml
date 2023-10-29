@@ -54,4 +54,4 @@ jobs:
           git checkout -b format-${{ github.sha }}
           git commit -m "Format"
           git push origin format-${{ github.sha }}
-          gh pr create --title "[No ticket] Automatic formatting" --body "Automatic formatting applied to source code." --base ${{ github.base_ref }} --head format-${{ github.sha }}
+          gh pr create --title "[No ticket] Automatic formatting" --body "Automatic formatting applied to source code." --base "${{ github.base_ref }}" --head "format-${{ github.sha }}"
