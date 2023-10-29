@@ -38,16 +38,16 @@ jobs:
       # Commit
       - name: git add
         run: |
-          git add .
+          git add --all
 
       - name: git diff (echo)
         run: |
-          echo "$(git diff --quiet --name-only || git diff --name-only)"
+          echo "$(git diff --staged --name-only || git diff --name-only)"
 
       - name: git diff
         id: git-diff
         run: |
-          git diff --quiet --name-only || git diff --name-only
+          git diff --staged --name-only || git diff --name-only
 
       - name: git branch, commit, push if changed
         if: steps.git-diff.outputs.stdout != ''
