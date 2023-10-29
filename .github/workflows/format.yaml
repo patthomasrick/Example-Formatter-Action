@@ -1,0 +1,52 @@
+on:
+  push:
+    branches: [master]
+
+jobs:
+  Format:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: "npm"
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          cache: "pip"
+
+      # Dependencies
+      - name: install dependencies
+        run: |
+          npm install
+          pip install -r requirements.txt
+
+      # Format
+      - name: format
+        run: |
+          npx prettier --write .
+          black .
+
+      # Commit
+      - name: git add
+        run: |
+          git add .
+
+      - name: git diff
+        id: git-diff
+        run: |
+          git diff --quiet && git diff --staged --quiet || git diff
+
+      - name: git branch, commit, push if changed
+        if: steps.git-diff.outputs.stdout != ''
+        run: |
+          git config --local user.email "patrick@patrickwthomas"
+          git config --local user.name "Patrick Thomas"
+          git checkout -b format
+          git commit -m "Format"
+          git push --set-upstream origin format
