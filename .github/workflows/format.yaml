@@ -39,6 +39,7 @@ jobs:
       - name: git add
         run: |
           git add --all
+          git reset -- *.lock
 
       - name: git diff
         id: git-diff
