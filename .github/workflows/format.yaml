@@ -1,3 +1,6 @@
+name: Format
+run-name: Format code and create PR
+
 on:
   push:
     branches: [master]
