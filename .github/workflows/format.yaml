@@ -42,12 +42,12 @@ jobs:
 
       - name: git diff (echo)
         run: |
-          echo "$(git diff --quiet && git diff --staged --quiet || git diff)"
+          echo "$(git diff --quiet --name-only || git diff --name-only)"
 
       - name: git diff
         id: git-diff
         run: |
-          git diff --quiet && git diff --staged --quiet || git diff
+          git diff --quiet --name-only || git diff --name-only
 
       - name: git branch, commit, push if changed
         if: steps.git-diff.outputs.stdout != ''
